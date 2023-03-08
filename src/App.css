@@ -1,0 +1,10 @@
+table {
+    width: 400px;
+}
+td{
+    text-align: center;
+    width: 100px;
+}
+button {
+ margin-top: 5px;   
+}
