@@ -1,10 +1,16 @@
+.app{
+    text-align: center;
+}
 table {
     width: 400px;
+    margin: auto;
 }
 td{
+    /*  */
     text-align: center;
     width: 100px;
 }
 button {
- margin-top: 5px;   
+ margin-top: 5px;
+ box-shadow: 3px 3px #888888;
 }
