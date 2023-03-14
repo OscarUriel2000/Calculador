@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import './App.css'
+// constante para modificar el tamaño de los botones
 const buttonsClasses="btn btn-primary w-75";
 function App() {
   const [screen, setScreen] = useState ('0')
-  const handleButtonClick = () => {
+  // funcion para el funcionemuento de los botones 
+  const handleButtonClick = (e) => {
+    const {value} = e.target;
+    if (value === 'C'){
+      setScreen('0');
+      return;
+    }
     if (screen === '0'){ 
-    setScreen(9)
-    } else { 
-    setScreen(`${screen}9`)
+    setScreen(value)
+    } else {
+    setScreen(`${screen}${value}`)
    }
   }
   return (
@@ -28,6 +35,8 @@ function App() {
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="C"
             >C
             </button>
           </td>
@@ -55,19 +64,24 @@ function App() {
           <td>
             <button type='button'
               className={buttonsClasses}
+              value="7"
+              onClick={(e) => handleButtonClick(e)}
             >7
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
+              value="8"
+              onClick={(e) => handleButtonClick(e)}
             >8
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
-              onClick={handleButtonClick}
+              onClick={(e) => handleButtonClick(e)}
+              value="9"
             >9
             </button>
           </td>
@@ -84,18 +98,24 @@ function App() {
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="4"
             >4
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="5"
             >5
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="6"
             >6
             </button>
           </td>
@@ -105,18 +125,24 @@ function App() {
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="1"
             >1
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="2"
             >2
             </button>
           </td>
           <td>
             <button type='button'
               className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="3"
             >3
             </button>
           </td>
@@ -124,7 +150,7 @@ function App() {
             <button type="button"
               className={buttonsClasses}
               style={{height:"80px"}}
-              > =
+            > =
             </button>
           </td>
         </tr>
@@ -132,20 +158,22 @@ function App() {
         <tr>
         <td>
             <button type="button"
-            className={buttonsClasses}
+              className={buttonsClasses}
             >{'<-'}
             </button>
           </td>
           <td>
             <button type="button"
-            className={buttonsClasses}
+              className={buttonsClasses}
+              onClick={(e) => handleButtonClick(e)}
+              value="0"
             >0
             </button>
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}>
-              .
+              className={buttonsClasses}
+            >.
             </button>
           </td>
         </tr>
