@@ -1,25 +1,34 @@
 import { useState } from 'react';
 import './App.css'
+import Button from './components/buttons';
 // constante para modificar el tamaño de los botones
-const buttonsClasses="btn btn-primary w-75";
+const buttonClasses="btn btn-primary w-75";
 function App() {
-  const [screen, setScreen] = useState ('0')
+  const [operator,setOperator] = useState('');
+  const [number1, setNumber1] = useState ('');
+  const [clearScreen, setClearScreen] = useState(false);
+  const [screen, setScreen] = useState ('0');
   // funcion para el funcionemuento de los botones 
   const handleButtonClick = (e) => {
     const {value} = e.target;
     if (value === '.'){
-      // if (screen.indexOf(value) !== -1) return;
-      if (screen.includes('.')) return; 
+      if (screen.includes('.'))
+      return; 
     }
     if (value === 'C'){
       setScreen('0');
       return;
     }
-    if (screen === '0' && value !== '.'){
+    if (clearScreen){
+      setScreen(value);
+      setClearScreen(false);
+      return;
+    }
+    if(screen === '0' && value !== '.'){
       setScreen(value)
-    } else {
+      return;
+    }
     setScreen(`${screen}${value}`)
-   }
   }
   // Boton de borrar
   const handleDelButtonClick = () => {
@@ -29,14 +38,31 @@ function App() {
     }
       setScreen(screen.slice(0, -1));
   }
-  // const handleDelButtonClick = () => {
-  //   if(screen.length === 1){
-  //     setScreen('0');
-  //     return;
-  //   } else {
-  //     setScreen(screen.slice(0, -1));
-  //   }
-  // }
+  const handleOperationButtonClick = (e) => {
+    setOperator(e.target.value);
+    setNumber1(screen);
+    setClearScreen(true);
+  }
+  const handleEqualButtonClick = () => {
+    const a = +number1;
+    const b = +screen;
+    switch (operator) {
+      case "+":
+        setScreen((a+b).toString());
+        break;
+      case "-":
+        setScreen((a-b).toString());
+        break;
+      case "*":
+        setScreen((a*b).toString());
+        break;
+      case "/":
+        setScreen((a/b).toString());
+        break;
+        default:
+        break;
+    }
+  }
   return (
     <div className='app'>
       <h1 className='shadow-sm'>Calculator</h1>
@@ -54,7 +80,7 @@ function App() {
         <tr>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="C"
               onClick={(e) => handleButtonClick(e)}
             >C
@@ -62,19 +88,25 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
+              value="/"
+              onClick={(e) => handleOperationButtonClick (e)}
             >/
             </button>
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
+              value="*"
+              onClick={(e) => handleOperationButtonClick (e)}
             >*
             </button>
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
+              value="-"
+              onClick={(e) => handleOperationButtonClick (e)}
             >-
             </button>
           </td>
@@ -83,23 +115,26 @@ function App() {
         <tr>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="7"
               onClick={(e) => handleButtonClick(e)}
               >7
             </button>
           </td>
           <td>
-            <button type='button'
-              className={buttonsClasses}
+            {/* <button type='button'
+              className={buttonClasses}
               value="8"
               onClick={(e) => handleButtonClick(e)}
             >8
-            </button>
+            </button> */}
+            <Button 
+            style={buttonClasses}
+            handleClick={handleButtonClick}/>     
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="9"
               onClick={(e) => handleButtonClick(e)}
             >9
@@ -107,8 +142,10 @@ function App() {
           </td>
           <td rowSpan={2}>
             <button type="button"
-              className={buttonsClasses}
+              className={buttonClasses}
               style={{height:"80px"}}
+              value="+"
+              onClick={(e) => handleOperationButtonClick (e)}
             >+
             </button>
           </td>
@@ -117,7 +154,7 @@ function App() {
         <tr>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="4"
               onClick={(e) => handleButtonClick(e)}
             >4
@@ -125,7 +162,7 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="5"
               onClick={(e) => handleButtonClick(e)}
             >5
@@ -133,7 +170,7 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="6"
               onClick={(e) => handleButtonClick(e)}
             >6
@@ -144,7 +181,7 @@ function App() {
         <tr>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="1"
               onClick={(e) => handleButtonClick(e)}
             >1
@@ -152,7 +189,7 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="2"
               onClick={(e) => handleButtonClick(e)}
             >2
@@ -160,7 +197,7 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="3"
               onClick={(e) => handleButtonClick(e)}
             >3
@@ -168,8 +205,9 @@ function App() {
           </td>
           <td rowSpan={2}>
             <button type="button"
-              className={buttonsClasses}
+              className={buttonClasses}
               style={{height:"80px"}}
+              onClick={handleEqualButtonClick}
             > =
             </button>
           </td>
@@ -178,14 +216,14 @@ function App() {
         <tr>
         <td>
             <button type="button"
-              className={buttonsClasses}
+              className={buttonClasses}
               onClick={handleDelButtonClick}
             >{'DEL'}
             </button>
           </td>
           <td>
             <button type="button"
-              className={buttonsClasses}
+              className={buttonClasses}
               value="0"
               onClick={(e) => handleButtonClick(e)}
             >0
@@ -193,7 +231,7 @@ function App() {
           </td>
           <td>
             <button type='button'
-              className={buttonsClasses}
+              className={buttonClasses}
               value="."
               onClick={(e) => handleButtonClick(e)}
             >.
